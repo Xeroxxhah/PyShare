@@ -16,10 +16,10 @@ A cross-platform data sharing utility.
 ### Bug report
 Found any bug!
 Report it to me at xeroxxhah@pm.me
-or open an [issue](https://github.com/Xeroxxhah/W3b3num/issues)
+or open an [issue](https://github.com/Xeroxxhah/PyShare/issues)
 ### Updates:
 Soon ..
 ### Contributions:
-All contributions are welcomed.fork this repo,improve it and [pull requests](https://github.com/Xeroxxhah/W3b3num/pulls)
+All contributions are welcomed.fork this repo,improve it and [pull requests](https://github.com/Xeroxxhah/PyShare/pulls)
 ### License
 Distributed under GPLV3.0
