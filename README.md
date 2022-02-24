@@ -12,7 +12,7 @@ A cross-platform data sharing utility.
 # Installation:
 - Just git clone it using ```git clone https://github.com/Xeroxxhah/PyShare.git```
 - install requirements using ```python3 -m pip install -r requirements.txt```
-- Now simply ```python3 PyShare.py <HOST> ``` 
+- Now simply ```python3 PyShare.py ``` 
 ### Bug report
 Found any bug!
 Report it to me at xeroxxhah@pm.me
