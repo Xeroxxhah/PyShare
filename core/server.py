@@ -2,6 +2,7 @@ import socket
 import tqdm
 import os
 import hashlib
+from plyer import notification
 
 def getip():
     sok = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,6 +17,8 @@ def calcSha256(file):
     else:
         print('File Does not exist...')
 
+def notify(host):
+    notification.notify(title = host,message="Hi There..." ,timeout=2)
 
 class Server():
     def __init__(self) -> None:
@@ -29,12 +32,15 @@ class Server():
         try:
             self.srvsok.bind((self.srvhost ,self.srvport))
             self.srvsok.listen(5)
-            con ,addr = self.srvsok.accept()
+            
 
             while True:
+                con ,addr = self.srvsok.accept()
                 data = con.recv(1024).decode('utf8')
                 if 'wdap, u there???' in data:
                     con.send('Yeee'.encode('utf-8'))
+                elif 'ping' in data:
+                    notify(str(addr))
         except Exception as e:
             print(e)
         except KeyboardInterrupt:
