@@ -32,6 +32,7 @@ def main():
         print('4:Use cached ips')
         print('5:Clear Cache')
         print('6:Restart Server')
+        print('7:Ping Buddy')
         print('q:Quit')
 
         print('--->')
@@ -102,6 +103,17 @@ def main():
                 print('+Server Started+')
         elif choice == '' or choice == ' ' or choice == '\n':
             pass
+        elif choice == '7':
+            if len(scan.buddies) > 0:
+                try:
+                    scan.showBuddies()
+                    user = int(input('Enter user no:'))
+                    host = scan.buddies[user]
+                    client.sendping(host)
+                except Exception as e:
+                    print(e)
+            else:
+                print('No buddies found..')
         else:
             print('Wrong Option')
 
