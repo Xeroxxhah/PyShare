@@ -1,11 +1,21 @@
 import socket
 import tqdm
-
+import os
+import hashlib
 
 def getip():
     sok = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sok.connect(('8.8.8.8',53))
     return sok.getsockname()[0]
+
+def calcSha256(file):
+    if os.path.exists(file):
+        with open(file, 'rb') as f:
+            data = f.read()
+            return str(hashlib.sha256(data).hexdigest())
+    else:
+        print('File Does not exist...')
+
 
 class Server():
     def __init__(self) -> None:
@@ -39,7 +49,7 @@ class Server():
             recvsok.listen(5)
             con, addr = recvsok.accept()
             tmpdata = con.recv(1024).decode()
-            filename, filesize = tmpdata.split('<SEP>')
+            filename, filesize, checksum = tmpdata.split('<SEP>')
             filesize = int(filesize)
             progress = tqdm.tqdm(range(filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
 
@@ -50,6 +60,8 @@ class Server():
                         break
                     wf.write(data)
                     progress.update(len(data))
+            if calcSha256(filename) != checksum:
+                print('Checksum Error: File Coruppted')
             con.close()
             recvsok.close()
         except Exception as e:
