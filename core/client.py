@@ -38,3 +38,9 @@ class Client():
                 print('Please enter a valid file path')
         except Exception as e:
             print(e)
+    
+    def sendping(self,host):
+        pingsok = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        pingsok.connect((host,5656))
+        pingsok.send('ping'.encode('utf-8'))
+        pingsok.close()
