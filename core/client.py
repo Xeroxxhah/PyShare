@@ -1,6 +1,15 @@
 import socket
 import os
 import tqdm
+import hashlib
+
+def calcSha256(file):
+    if os.path.exists(file):
+        with open(file, 'rb') as f:
+            data = f.read()
+            return str(hashlib.sha256(data).hexdigest())
+    else:
+        print('File Does not exist...')
 
 class Client():
 
@@ -9,12 +18,13 @@ class Client():
 
     def send(self, file, to):
         try:
+            checksum = calcSha256(file)
             sok = socket.socket()
             sok.connect((to, 2022))
             if os.path.exists(file):
                 filename = os.path.basename(file)
                 filesize = os.path.getsize(file)
-                sok.send(f"{filename}<SEP>{filesize}".encode())
+                sok.send(f"{filename}<SEP>{filesize}<SEP>{checksum}".encode())
                 progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
                 with open(file, 'rb') as f:
                     while True:
