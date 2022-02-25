@@ -24,7 +24,7 @@ def main():
         if srv.srvstatus:
             print('+ Server Listening +')
         else:
-                print('- Server not Listening -')
+            print('- Server not Listening -')
 
         print('1:Scan for buddies')
         print('2:Stop Server')
@@ -108,7 +108,11 @@ def main():
                 try:
                     scan.showBuddies()
                     user = int(input('Enter user no:'))
-                    host = scan.buddies[user]
+                    try:
+                        host = scan.buddies[user]
+                    except IndexError:
+                        print('Wrong User')
+                        break
                     client.sendping(host)
                 except Exception as e:
                     print(e)
@@ -116,7 +120,8 @@ def main():
                 print('No buddies found..')
         else:
             print('Wrong Option')
-
+    lsrvproc.terminate()
+    rsrvproc.terminate()
     sys.exit()
 
 main()
