@@ -18,12 +18,14 @@ def main():
     except Exception as e:
         print(e)
 
-    if srv.srvstatus:
-        print('+ Server Listening +')
-    else:
-        print('- Server not Listening -')
+
 
     while True:
+        if srv.srvstatus:
+            print('+ Server Listening +')
+        else:
+                print('- Server not Listening -')
+
         print('1:Scan for buddies')
         print('2:Stop Server')
         print('3:Send File')
@@ -78,6 +80,7 @@ def main():
                     data = data.splitlines()
                     for i in data:
                         scan.buddies.append(i)
+                        scan.buddies = list(dict.fromkeys(scan.buddies))
                 rf.close()
             except FileNotFoundError:
                 print('No cache Found')
@@ -97,6 +100,8 @@ def main():
                 lsrvproc.start()
                 rsrvproc.start()
                 print('+Server Started+')
+        elif choice == '' or choice == ' ' or choice == '\n':
+            pass
         else:
             print('Wrong Option')
 
