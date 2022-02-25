@@ -44,5 +44,12 @@ class Scan():
             return self.buddies
         else:
             return None
+    
+    def showBuddies(self):
+        no = 0
+        if len(self.buddies) > 0:
+            for buddy in self.buddies:
+                print(f'{no}: {buddy}')
+                no += 1
 
 
