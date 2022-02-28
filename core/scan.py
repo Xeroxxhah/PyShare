@@ -11,6 +11,7 @@ class Scan():
     def __init__(self):
         self.ip = getip()
         self.buddies = []
+        self.buddiesWithName = {}
 
     def storeCache(self):
         with open('ip.cache', 'w') as wf:
@@ -29,9 +30,10 @@ class Scan():
                 try:
                     if tempsok.connect_ex((tmpvar, 5656)) == 0:
                         tempsok.send('wdap, u there???'.encode('utf8'))
-                        msg = tempsok.recv(1024).decode('utf8')
+                        msg, hostname = tempsok.recv(1024).decode('utf8').split(':')
                         if msg == 'Yeee':
                             self.buddies.append(tmpvar)
+                            self.buddiesWithName.update({tmpvar:hostname})
                         tempsok.close()
 
                 except Exception as e:
