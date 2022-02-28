@@ -28,7 +28,7 @@ class Client():
                 progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
                 with open(file, 'rb') as f:
                     while True:
-                        data = f.read(1024)
+                        data = f.read(4096)
                         if not data:
                             break
                         sok.sendall(data)
@@ -42,5 +42,5 @@ class Client():
     def sendping(self,host):
         pingsok = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         pingsok.connect((host,5656))
-        pingsok.send('ping'.encode('utf-8'))
+        pingsok.send(f'ping:{str(socket.gethostname())}'.encode('utf-8'))
         pingsok.close()
