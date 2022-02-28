@@ -44,7 +44,7 @@ def main():
             if len(buddies) > 0:
                 print('+Buddies+')
                 for host in buddies:
-                    print(host)
+                    print(f'{scan.buddiesWithName.get(host)} ({host})')
             else:
                 print('No buddies found...')
         elif choice == 'q':
