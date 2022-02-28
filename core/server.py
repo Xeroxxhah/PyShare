@@ -18,7 +18,10 @@ def calcSha256(file):
         print('File Does not exist...')
 
 def notify(host):
-    notification.notify(title = host,message="Hi There..." ,timeout=2)
+    notification.notify(title = host,message="Hi There..." ,timeout=5)
+
+def gethostname():
+    return str(socket.gethostname())
 
 class Server():
     def __init__(self) -> None:
@@ -38,9 +41,9 @@ class Server():
                 con ,addr = self.srvsok.accept()
                 data = con.recv(1024).decode('utf8')
                 if 'wdap, u there???' in data:
-                    con.send('Yeee'.encode('utf-8'))
+                    con.send(f'Yeee:{gethostname()}'.encode('utf-8'))
                 elif 'ping' in data:
-                    notify(str(addr))
+                    notify(data.split(':')[1])
         except Exception as e:
             print(e)
         except KeyboardInterrupt:
@@ -61,13 +64,13 @@ class Server():
 
             with open(filename, 'wb') as wf:
                 while True:
-                    data = con.recv(1024)
+                    data = con.recv(4096)
                     if not data:
                         break
                     wf.write(data)
                     progress.update(len(data))
             if calcSha256(filename) != checksum:
-                print('Checksum Error: File Coruppted')
+                print('Checksum Error: File Corrupted')
             con.close()
             recvsok.close()
         except Exception as e:
