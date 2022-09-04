@@ -1,4 +1,4 @@
-from core.server import Server
+from core.server import Server,getip
 from core.scan import Scan
 from core.client import Client
 from multiprocessing import Process
@@ -6,6 +6,7 @@ import os , sys
 
 def main():
     buddies = []
+    my_ip = getip()
     try:
         srv = Server()
         scan = Scan()
@@ -29,10 +30,11 @@ def main():
         print('1:Scan for buddies')
         print('2:Stop Server')
         print('3:Send File')
-        print('4:Use cached ips')
-        print('5:Clear Cache')
-        print('6:Restart Server')
-        print('7:Ping Buddy')
+        print('4:Send Directory')
+        print('5:Use cached ips')
+        print('6:Clear Cache')
+        print('7:Restart Server')
+        print('8:Ping Buddy')
         print('q:Quit')
 
         print('--->')
@@ -41,6 +43,7 @@ def main():
             scan.look4buddies()
             scan.storeCache()
             buddies = scan.buddies
+            buddies = list(dict.fromkeys(buddies))
             if len(buddies) > 0:
                 print('+Buddies+')
                 for host in buddies:
@@ -61,6 +64,8 @@ def main():
             host_no = 0
             if len(scan.buddies) > 0:
                 for host in scan.buddies:
+                    if my_ip in host:
+                        continue
                     print(f"{host_no}: {host.strip('')}")
                     host_no += 1
                 user = int(input('Choose a host no to send:'))
@@ -75,6 +80,26 @@ def main():
             else:
                 print('No buddies found, First scan for buddies')
         elif choice == '4':
+            host_no = 0
+            if len(scan.buddies) > 0:
+                for host in scan.buddies:
+                    if my_ip in host:
+                        continue
+                    print(f"{host_no}: {host.strip('')}")
+                    host_no += 1
+                user = int(input('Choose a host no to send:'))
+                dir = input('Enter directory path:')
+                user_ip = scan.buddies[user]
+                try:
+                    client.sendDir(dir, user_ip)
+                except Exception as e:
+                    print(e)
+                else:
+                    print('File Sent Successfully...')
+            else:
+                print('No buddies found, First scan for buddies')
+
+        elif choice == '5':
             try:
                 with open('ip.cache', 'r') as rf:
                     data = rf.read()
@@ -85,12 +110,12 @@ def main():
                 rf.close()
             except FileNotFoundError:
                 print('No cache Found')
-        elif choice == '5':
+        elif choice == '6':
             try:
                 os.remove('ip.cache')
             except FileNotFoundError:
                 pass
-        elif choice == '6':
+        elif choice == '7':
             if srv.srvstatus:
                 print('Server Already Running...')
             else:
@@ -103,7 +128,7 @@ def main():
                 print('+Server Started+')
         elif choice == '' or choice == ' ' or choice == '\n':
             pass
-        elif choice == '7':
+        elif choice == '8':
             if len(scan.buddies) > 0:
                 try:
                     scan.showBuddies()
