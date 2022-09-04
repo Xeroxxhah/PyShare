@@ -1,6 +1,6 @@
-from core.server import Server,getip
-from core.scan import Scan
-from core.client import Client
+from .core.server import Server,getip
+from .core.scan import Scan
+from .core.client import Client
 from multiprocessing import Process
 import os , sys
 
@@ -47,6 +47,8 @@ def main():
             if len(buddies) > 0:
                 print('+Buddies+')
                 for host in buddies:
+                    if my_ip in host:
+                        continue
                     print(f'{scan.buddiesWithName.get(host)} ({host})')
             else:
                 print('No buddies found...')
