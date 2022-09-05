@@ -5,14 +5,14 @@
 ![Contribution](https://img.shields.io/badge/Contributions-Welcome-<brightgreen>)
 [![Active](http://img.shields.io/badge/Status-Active-green.svg)](https://github.com/Justaus3r)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-![semver](https://badgen.net/badge/Semantic-Version/0.3.2/purple)
+[![releases](https://img.shields.io/github/release/Xeroxxhah/PyShare.svg)](https://github.com/Xeroxxhah/PyShare/releases)
 
 A cross-platform data sharing utility.
 
 # Installation:
 - Just git clone it using ```git clone https://github.com/Xeroxxhah/PyShare.git```
-- install requirements using ```python3 -m pip install -r requirements.txt```
-- Now simply ```python3 PyShare.py ``` 
+- install simply using ```python3 setup.py install```
+
 ### Bug report
 Found any bug!
 Report it to me at xeroxxhah@pm.me
