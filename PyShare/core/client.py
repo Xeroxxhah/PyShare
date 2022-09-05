@@ -19,7 +19,6 @@ class Client():
 
     def send(self, file, to):
         try:
-            shutil.make_archive(dst,'zip',src)
             checksum = calcSha256(file)
             sok = socket.socket()
             sok.connect((to, 2022))
